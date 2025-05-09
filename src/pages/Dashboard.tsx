@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/contexts/AppContext';
+import { Subject } from '@/types'; 
 import StudentProfile from '@/components/StudentProfile';
 import RadarChart from '@/components/RadarChart';
 import SkillsBarChart from '@/components/SkillsBarChart';
