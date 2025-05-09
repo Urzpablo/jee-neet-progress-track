@@ -1,7 +1,10 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import StudentProfile from '@/components/StudentProfile';
 import RadarChart from '@/components/RadarChart';
+import SkillsBarChart from '@/components/SkillsBarChart';
+import ViewToggle from '@/components/ViewToggle';
 import ProgressChart from '@/components/ProgressChart';
 import TopicsList from '@/components/TopicsList';
 import TutorNotes from '@/components/TutorNotes';
@@ -9,8 +12,11 @@ import PracticeInput from '@/components/PracticeInput';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+type ViewType = 'radar' | 'chart';
+
 const Dashboard = () => {
   const { userRole, currentStudent } = useApp();
+  const [activeView, setActiveView] = useState<ViewType>('radar');
   
   if (!currentStudent) {
     return (
@@ -32,14 +38,24 @@ const Dashboard = () => {
   const thirdSubject = isJEE ? 'mathematics' : 'biology';
   const thirdSubjectName = isJEE ? 'Mathematics' : 'Biology';
   
+  // Function to render the appropriate chart based on active view
+  const renderSkillsView = (skills: any[], subject?: Subject) => {
+    if (activeView === 'radar') {
+      return <RadarChart skills={skills} subject={subject} height={350} />;
+    } else {
+      return <SkillsBarChart skills={skills} subject={subject} height={350} />;
+    }
+  };
+  
   return (
     <div className="space-y-8">
       <StudentProfile student={currentStudent} />
       
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         <Card className="md:col-span-3">
-          <CardHeader>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-base font-medium">Skill Assessment</CardTitle>
+            <ViewToggle activeView={activeView} onViewChange={setActiveView} />
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all">
@@ -50,31 +66,16 @@ const Dashboard = () => {
                 <TabsTrigger value={thirdSubject}>{thirdSubjectName}</TabsTrigger>
               </TabsList>
               <TabsContent value="all">
-                <RadarChart 
-                  skills={currentStudent.skills} 
-                  height={350}
-                />
+                {renderSkillsView(currentStudent.skills)}
               </TabsContent>
               <TabsContent value="physics">
-                <RadarChart 
-                  skills={currentStudent.skills} 
-                  subject="physics"
-                  height={350}
-                />
+                {renderSkillsView(currentStudent.skills, "physics")}
               </TabsContent>
               <TabsContent value="chemistry">
-                <RadarChart 
-                  skills={currentStudent.skills} 
-                  subject="chemistry"
-                  height={350}
-                />
+                {renderSkillsView(currentStudent.skills, "chemistry")}
               </TabsContent>
               <TabsContent value={thirdSubject}>
-                <RadarChart 
-                  skills={currentStudent.skills} 
-                  subject={thirdSubject}
-                  height={350}
-                />
+                {renderSkillsView(currentStudent.skills, thirdSubject)}
               </TabsContent>
             </Tabs>
           </CardContent>
