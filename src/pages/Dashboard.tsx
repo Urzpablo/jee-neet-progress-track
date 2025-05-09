@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import { Subject } from '@/types'; 
@@ -7,6 +8,7 @@ import ProgressChart from '@/components/ProgressChart';
 import TopicsList from '@/components/TopicsList';
 import TutorNotes from '@/components/TutorNotes';
 import PracticeInput from '@/components/PracticeInput';
+import SkillsAssessmentChart from '@/components/SkillsAssessmentChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -55,14 +57,18 @@ const Dashboard = () => {
                 <TabsTrigger value={thirdSubject}>{thirdSubjectName}</TabsTrigger>
               </TabsList>
               
-              {/* Replace all chart content with the static image */}
-              <div className="flex justify-center items-center py-2">
-                <img 
-                  src="/lovable-uploads/0a2c926e-bee6-4281-9051-8b13a05ef9ce.png" 
-                  alt="Your Skills vs. Ideal Topper" 
-                  className="max-w-full h-auto rounded-lg shadow-sm"
-                />
-              </div>
+              <TabsContent value="all">
+                <SkillsAssessmentChart skills={currentStudent.skills} />
+              </TabsContent>
+              <TabsContent value="physics">
+                <SkillsAssessmentChart skills={currentStudent.skills} subject="physics" />
+              </TabsContent>
+              <TabsContent value="chemistry">
+                <SkillsAssessmentChart skills={currentStudent.skills} subject="chemistry" />
+              </TabsContent>
+              <TabsContent value={thirdSubject}>
+                <SkillsAssessmentChart skills={currentStudent.skills} subject={thirdSubject as Subject} />
+              </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
