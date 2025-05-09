@@ -84,7 +84,7 @@ const AppSidebar = () => {
                   <SidebarMenuItem key={student.id}>
                     <SidebarMenuButton 
                       asChild
-                      active={currentStudent?.id === student.id}
+                      isActive={currentStudent?.id === student.id}
                       onClick={() => setCurrentStudent(student.id)}
                     >
                       <Link to={`/student/${student.id}`}>
