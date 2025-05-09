@@ -1,10 +1,19 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Skill, Subject } from '@/types';
-import { Chart, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+} from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 
-Chart.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+// Register the required chart components
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 interface RadarChartProps {
   skills: Skill[];
@@ -17,8 +26,6 @@ const RadarChart: React.FC<RadarChartProps> = ({ skills, subject, height = 300, 
   const filteredSkills = subject 
     ? skills.filter(skill => skill.subject === subject) 
     : skills;
-
-  const chartRef = useRef<Chart | null>(null);
   
   const data = {
     labels: filteredSkills.map(skill => skill.name),

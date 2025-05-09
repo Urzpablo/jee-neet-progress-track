@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TutorNote } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { useApp } from '@/contexts/AppContext';
 
 interface TutorNotesProps {

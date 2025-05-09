@@ -1,10 +1,20 @@
 
 import React from 'react';
 import { MockTest } from '@/types';
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Title
+} from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title);
+// Register the required chart components
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title);
 
 interface ProgressChartProps {
   mockTests: MockTest[];
