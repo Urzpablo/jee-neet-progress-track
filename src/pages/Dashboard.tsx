@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useApp } from '@/contexts/AppContext';
 import StudentProfile from '@/components/StudentProfile';
@@ -28,6 +27,11 @@ const Dashboard = () => {
     );
   }
   
+  // Determine if this is a JEE or NEET student to show appropriate tabs
+  const isJEE = currentStudent.targetExam === 'JEE';
+  const thirdSubject = isJEE ? 'mathematics' : 'biology';
+  const thirdSubjectName = isJEE ? 'Mathematics' : 'Biology';
+  
   return (
     <div className="space-y-8">
       <StudentProfile student={currentStudent} />
@@ -39,37 +43,37 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all">
-              <TabsList className="mb-4">
+              <TabsList className="mb-4 flex flex-wrap">
                 <TabsTrigger value="all">All Skills</TabsTrigger>
                 <TabsTrigger value="physics">Physics</TabsTrigger>
                 <TabsTrigger value="chemistry">Chemistry</TabsTrigger>
-                <TabsTrigger value="mathematics">{currentStudent.targetExam === 'JEE' ? 'Mathematics' : 'Biology'}</TabsTrigger>
+                <TabsTrigger value={thirdSubject}>{thirdSubjectName}</TabsTrigger>
               </TabsList>
               <TabsContent value="all">
                 <RadarChart 
                   skills={currentStudent.skills} 
-                  height={300}
+                  height={350}
                 />
               </TabsContent>
               <TabsContent value="physics">
                 <RadarChart 
                   skills={currentStudent.skills} 
                   subject="physics"
-                  height={300}
+                  height={350}
                 />
               </TabsContent>
               <TabsContent value="chemistry">
                 <RadarChart 
                   skills={currentStudent.skills} 
                   subject="chemistry"
-                  height={300}
+                  height={350}
                 />
               </TabsContent>
-              <TabsContent value="mathematics">
+              <TabsContent value={thirdSubject}>
                 <RadarChart 
                   skills={currentStudent.skills} 
-                  subject={currentStudent.targetExam === 'JEE' ? 'mathematics' : 'biology'}
-                  height={300}
+                  subject={thirdSubject}
+                  height={350}
                 />
               </TabsContent>
             </Tabs>

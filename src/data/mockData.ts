@@ -1,22 +1,14 @@
-
 import { Student, Subject } from "@/types";
 
-// Helper function to generate random scores for skills
+// Helper function to generate complete set of skills for JEE/NEET evaluation
 const generateSkillScores = (subject: Subject, baseScore = 5) => {
   const randomOffset = () => Math.floor(Math.random() * 4) - 2;
   const baseIdealScore = 9;
 
-  return [
+  // Common skills for all subjects
+  const commonSkills = [
     {
-      id: `${subject}-1`,
-      name: subject === 'biology' ? 'Concept Clarity' : 'Problem Solving',
-      description: 'Ability to understand fundamental concepts',
-      score: Math.max(1, Math.min(10, baseScore + randomOffset())),
-      idealScore: baseIdealScore,
-      subject,
-    },
-    {
-      id: `${subject}-2`,
+      id: `${subject}-speed`,
       name: 'Speed & Accuracy',
       description: 'How quickly and accurately problems are solved',
       score: Math.max(1, Math.min(10, baseScore - 1 + randomOffset())),
@@ -24,14 +16,109 @@ const generateSkillScores = (subject: Subject, baseScore = 5) => {
       subject,
     },
     {
-      id: `${subject}-3`,
-      name: subject === 'biology' ? 'Memory Recall' : 'Formula Application',
-      description: subject === 'biology' ? 'Ability to recall facts' : 'Using correct formulas in problem solving',
+      id: `${subject}-logical`,
+      name: 'Logical Reasoning',
+      description: 'Ability to use logic to solve complex problems',
+      score: Math.max(1, Math.min(10, baseScore + randomOffset())),
+      idealScore: baseIdealScore,
+      subject,
+    },
+    {
+      id: `${subject}-time`,
+      name: 'Time Management',
+      description: 'Effectively utilizing available time during exams',
+      score: Math.max(1, Math.min(10, baseScore + randomOffset())),
+      idealScore: baseIdealScore,
+      subject,
+    },
+    {
+      id: `${subject}-exam`,
+      name: 'Exam Strategy',
+      description: 'Approach to maximizing score in exam conditions',
       score: Math.max(1, Math.min(10, baseScore + 1 + randomOffset())),
       idealScore: baseIdealScore,
       subject,
     },
-  ]
+  ];
+
+  // Subject-specific skills
+  let subjectSkills = [];
+  
+  if (subject === 'physics' || subject === 'chemistry' || subject === 'mathematics') {
+    subjectSkills = [
+      {
+        id: `${subject}-problem`,
+        name: 'Problem Solving',
+        description: 'Ability to approach and solve complex problems',
+        score: Math.max(1, Math.min(10, baseScore + 1 + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+      {
+        id: `${subject}-concepts`,
+        name: 'Conceptual Clarity',
+        description: 'Understanding of fundamental concepts and principles',
+        score: Math.max(1, Math.min(10, baseScore + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+      {
+        id: `${subject}-formula`,
+        name: 'Formula Application',
+        description: 'Correctly applying formulas to solve problems',
+        score: Math.max(1, Math.min(10, baseScore - 1 + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+      {
+        id: `${subject}-analytical`,
+        name: 'Analytical Thinking',
+        description: 'Breaking down complex problems into simpler components',
+        score: Math.max(1, Math.min(10, baseScore + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+    ];
+  }
+  
+  if (subject === 'biology') {
+    subjectSkills = [
+      {
+        id: `${subject}-concepts`,
+        name: 'Conceptual Clarity',
+        description: 'Understanding of fundamental biological concepts',
+        score: Math.max(1, Math.min(10, baseScore + 1 + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+      {
+        id: `${subject}-application`,
+        name: 'Application to New Situations',
+        description: 'Applying concepts to novel scenarios and case studies',
+        score: Math.max(1, Math.min(10, baseScore + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+      {
+        id: `${subject}-pattern`,
+        name: 'Pattern Recognition',
+        description: 'Identifying patterns in biological systems and processes',
+        score: Math.max(1, Math.min(10, baseScore - 1 + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+      {
+        id: `${subject}-numerical`,
+        name: 'Numerical Proficiency',
+        description: 'Ability to work with biological data and calculations',
+        score: Math.max(1, Math.min(10, baseScore + randomOffset())),
+        idealScore: baseIdealScore,
+        subject,
+      },
+    ];
+  }
+
+  return [...commonSkills, ...subjectSkills];
 };
 
 // Generate some topics per subject
@@ -177,9 +264,6 @@ export const mockStudents: Student[] = [
       ...generateSkillScores('chemistry', 6),
       ...generateSkillScores('mathematics', 8)
     ],
-    ...generateTopics('physics'),
-    ...generateTopics('chemistry'),
-    ...generateTopics('mathematics'),
     weakTopics: [
       ...generateTopics('physics').weakTopics,
       ...generateTopics('chemistry').weakTopics,
@@ -210,9 +294,6 @@ export const mockStudents: Student[] = [
       ...generateSkillScores('chemistry', 7),
       ...generateSkillScores('biology', 8)
     ],
-    ...generateTopics('physics'),
-    ...generateTopics('chemistry'),
-    ...generateTopics('biology'),
     weakTopics: [
       ...generateTopics('physics').weakTopics,
       ...generateTopics('chemistry').weakTopics,
@@ -243,9 +324,6 @@ export const mockStudents: Student[] = [
       ...generateSkillScores('chemistry', 5),
       ...generateSkillScores('mathematics', 7)
     ],
-    ...generateTopics('physics'),
-    ...generateTopics('chemistry'),
-    ...generateTopics('mathematics'),
     weakTopics: [
       ...generateTopics('physics').weakTopics,
       ...generateTopics('chemistry').weakTopics,

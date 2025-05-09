@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Skill, Subject } from '@/types';
 import {
   Chart as ChartJS,
@@ -58,7 +58,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ skills, subject, height = 300, 
         },
         pointLabels: {
           font: {
-            size: 12,
+            size: 10,
             weight: 'bold' as const,
           },
         },
@@ -66,6 +66,9 @@ const RadarChart: React.FC<RadarChartProps> = ({ skills, subject, height = 300, 
     },
     maintainAspectRatio: false,
     plugins: {
+      legend: {
+        position: 'bottom' as const,
+      },
       title: {
         display: !!title,
         text: title || '',
