@@ -1,10 +1,7 @@
-
 import React, { useState } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import { Subject } from '@/types'; 
 import StudentProfile from '@/components/StudentProfile';
-import RadarChart from '@/components/RadarChart';
-import SkillsBarChart from '@/components/SkillsBarChart';
 import ViewToggle from '@/components/ViewToggle';
 import ProgressChart from '@/components/ProgressChart';
 import TopicsList from '@/components/TopicsList';
@@ -39,15 +36,6 @@ const Dashboard = () => {
   const thirdSubject = isJEE ? 'mathematics' : 'biology';
   const thirdSubjectName = isJEE ? 'Mathematics' : 'Biology';
   
-  // Function to render the appropriate chart based on active view
-  const renderSkillsView = (skills: any[], subject?: Subject) => {
-    if (activeView === 'radar') {
-      return <RadarChart skills={skills} subject={subject} height={350} />;
-    } else {
-      return <SkillsBarChart skills={skills} subject={subject} height={350} />;
-    }
-  };
-  
   return (
     <div className="space-y-8">
       <StudentProfile student={currentStudent} />
@@ -66,18 +54,15 @@ const Dashboard = () => {
                 <TabsTrigger value="chemistry">Chemistry</TabsTrigger>
                 <TabsTrigger value={thirdSubject}>{thirdSubjectName}</TabsTrigger>
               </TabsList>
-              <TabsContent value="all">
-                {renderSkillsView(currentStudent.skills)}
-              </TabsContent>
-              <TabsContent value="physics">
-                {renderSkillsView(currentStudent.skills, "physics")}
-              </TabsContent>
-              <TabsContent value="chemistry">
-                {renderSkillsView(currentStudent.skills, "chemistry")}
-              </TabsContent>
-              <TabsContent value={thirdSubject}>
-                {renderSkillsView(currentStudent.skills, thirdSubject)}
-              </TabsContent>
+              
+              {/* Replace all chart content with the static image */}
+              <div className="flex justify-center items-center py-2">
+                <img 
+                  src="/lovable-uploads/0a2c926e-bee6-4281-9051-8b13a05ef9ce.png" 
+                  alt="Your Skills vs. Ideal Topper" 
+                  className="max-w-full h-auto rounded-lg shadow-sm"
+                />
+              </div>
             </Tabs>
           </CardContent>
         </Card>
